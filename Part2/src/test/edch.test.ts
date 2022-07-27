@@ -4,14 +4,14 @@ import {
   encrypt,
   genKeypair,
   genEcdhSharedKey,
-  EdDSA
+  EdDSA,
 } from '../index';
 
 describe('ECDH test', () => {
   let eddsa: EdDSA;
   beforeAll(async () => {
     eddsa = await buildEddsaModule();
-  }, 15000);
+  });
 
   it('should encrypt/decrypt text', async () => {
     const { privKey: bobPrivKey, pubKey: bobPubKey } = genKeypair(eddsa);

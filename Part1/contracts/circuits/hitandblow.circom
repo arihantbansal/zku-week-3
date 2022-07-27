@@ -34,16 +34,17 @@ template HitAndBlow() {
     var equalIdx = 0;
 
     // Create a constraint that the solution and guess digits are all less than 10.
-    for (j=0; j<4; j++) {
+    for (j = 0; j < 4; j++) {
         lessThan[j] = LessThan(4);
         lessThan[j].in[0] <== guess[j];
         lessThan[j].in[1] <== 10;
         lessThan[j].out === 1;
-        lessThan[j+4] = LessThan(4);
-        lessThan[j+4].in[0] <== soln[j];
-        lessThan[j+4].in[1] <== 10;
-        lessThan[j+4].out === 1;
-        for (k=j+1; k<4; k++) {
+        lessThan[j + 4] = LessThan(4);
+        lessThan[j + 4].in[0] <== soln[j];
+        lessThan[j + 4].in[1] <== 10;
+        lessThan[j + 4].out === 1;
+
+        for (k = j + 1; k < 4; k++) {
             // Create a constraint that the solution and guess digits are unique. no duplication.
             equalGuess[equalIdx] = IsEqual();
             equalGuess[equalIdx].in[0] <== guess[j];
@@ -62,15 +63,17 @@ template HitAndBlow() {
     var blow = 0;
     component equalHB[16];
 
-    for (j=0; j<4; j++) {
-        for (k=0; k<4; k++) {
-            equalHB[4*j+k] = IsEqual();
-            equalHB[4*j+k].in[0] <== soln[j];
-            equalHB[4*j+k].in[1] <== guess[k];
-            blow += equalHB[4*j+k].out;
-            if (j == k) {
-                hit += equalHB[4*j+k].out;
-                blow -= equalHB[4*j+k].out;
+    for (j = 0; j < 4; j++) {
+        for (k = 0; k < 4; k++) {
+            equalHB[4*j + k] = IsEqual();
+            equalHB[4*j + k].in[0] <== soln[j];
+            equalHB[4*j + k].in[1] <== guess[k];
+            
+						blow += equalHB[4*j + k].out;
+            
+						if (j == k) {
+                hit += equalHB[4*j + k].out;
+                blow -= equalHB[4*j + k].out;
             }
         }
     }
